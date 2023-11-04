@@ -7,7 +7,7 @@
 
 SRC := ./src/my_ls.c
 SRC_TEST := ./tests/test_my_ls.c
-CFLAGS := -Wall -Wextra -Werror -I .
+CFLAGS := -Wall -Wextra -Werror -I . -L . -lmy
 NAME_TEST := unit_tests
 NAME := my_ls
 
