@@ -48,7 +48,7 @@ jobs:
         timeout-minutes: 2
         run: make
     
-      - name: check_executables
+      - name: Check executable
         run: |
             if [[ ! -f $EXECUTABLES ]]; then
                 echo "::error file=$EXECUTABLES::Executable not found"
