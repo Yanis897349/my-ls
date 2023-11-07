@@ -9,7 +9,8 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 
-Test(files, unique_file) {
+Test(files, unique_file)
+{
     int ac = 2;
     char *av[] = {"./my_ls", "Makefile"};
     char **files_path = get_files(ac, av);
@@ -19,7 +20,8 @@ Test(files, unique_file) {
     free(files_path);
 }
 
-Test(files, multiple_files) {
+Test(files, multiple_files)
+{
     int ac = 3;
     char *av[] = {"./my_ls", "Makefile", "src"};
     char **files_path = get_files(ac, av);
@@ -30,7 +32,8 @@ Test(files, multiple_files) {
     free(files_path);
 }
 
-Test(files, multiple_files_mixed_options) {
+Test(files, multiple_files_mixed_options)
+{
     int ac = 4;
     char *av[] = {"./my_ls", "-l", "Makefile", "src"};
     char **files_path = get_files(ac, av);
@@ -41,7 +44,8 @@ Test(files, multiple_files_mixed_options) {
     free(files_path);
 }
 
-Test(files, no_file) {
+Test(files, no_file)
+{
     int ac = 2;
     char *av[] = {"./my_ls", "-l"};
     char **files_path = get_files(ac, av);

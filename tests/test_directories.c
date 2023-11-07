@@ -10,7 +10,8 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 
-Test(directories, unique_directory) {
+Test(directories, unique_directory)
+{
     int ac = 2;
     char *av[] = {"./my_ls", "src"};
     char **files_path = get_files(ac, av);
