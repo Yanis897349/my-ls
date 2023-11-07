@@ -7,7 +7,14 @@
 
 #include "src/Core/options.h"
 #include <criterion/criterion.h>
+#include <criterion/redirect.h>
 #include <stdlib.h>
+
+void redirect_all_std(void)
+{
+    cr_redirect_stdout();
+    cr_redirect_stderr();
+}
 
 Test(options, options_string_set_max)
 {
@@ -50,14 +57,14 @@ Test(options, options_string_with_supported_flags)
     free(options_string);
 }
 
-Test(options, options_string_with_not_supported_flag)
+Test(options, options_string_with_not_supported_flag, .init = redirect_all_std)
 {
     int ac = 2;
     char *av[] = {"./my_ls", "-aRdX"};
     char *options_string = get_options(ac, av);
     int is_valid = is_options_string_valid(options_string);
 
-    cr_assert_neq(is_valid, 1);
-    cr_assert_eq(is_valid, 3);
+    cr_assert_eq(is_valid, 84);
+    cr_assert_stderr_eq_str("my_ls: invalid option -- 'X'\n");
     free(options_string);
 }

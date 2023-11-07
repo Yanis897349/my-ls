@@ -35,4 +35,5 @@ char *my_strstr(char *str, char const *to_find);
 char **my_str_to_word_array(const char *str);
 char *my_strupcase(char *str);
 void *my_memcpy(void *dest, const void *src, size_t n);
+void *my_memset(void *pointer, int value, size_t count);
 #endif /* MY_STRINGS_H_ */
