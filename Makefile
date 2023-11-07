@@ -6,10 +6,14 @@
 ##
 
 SRC := ./src/Core/options.c \
-	./src/Core/files.c
+	./src/Core/files.c \
+	./src/Core/directories.c \
+	./src/Core/display.c
 SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_options.c \
-	./tests/test_files.c
+	./tests/test_files.c \
+	./tests/test_directories.c \
+	./tests/test_display.c
 MAIN_SRC := ./src/my_ls.c
 CFLAGS := -Wall -Wextra -Werror -I . -L . -lmy
 LIB_PATH := ./lib/my

@@ -10,7 +10,7 @@
 #include <criterion/redirect.h>
 #include <stdlib.h>
 
-void redirect_all_std(void)
+static void redirect_all_std(void)
 {
     cr_redirect_stdout();
     cr_redirect_stderr();

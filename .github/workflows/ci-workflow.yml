@@ -34,7 +34,7 @@ jobs:
           fi
 
   build_and_test:
-    name: Build and test
+    name: Build, test and memory check
     needs: [check_coding_style]
     runs-on: ubuntu-latest
     container:

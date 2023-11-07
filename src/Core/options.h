@@ -10,6 +10,7 @@
     #define VALID_OPTIONS "alRdrt"
 
 /* FUNCTION PROTOTYPE */
+
 int is_options_string_valid(const char *const options_string);
 char *get_options(int ac, char *const *const av);
 
