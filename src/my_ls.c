@@ -2,21 +2,18 @@
 ** EPITECH PROJECT, 2023
 ** my_ls
 ** File description:
-** Main function for my_ls
+** my_ls main file
 */
 
 #include "Core/options.h"
-#include <stddef.h>
+#include <stdlib.h>
 
 int main(int ac, char **av)
 {
-    char *options_string = NULL;
-    int options_string_index = get_options_string_index(ac, av);
+    char *options_string = get_options(ac, av);
 
-    if (options_string_index != NO_OPTIONS) {
-        options_string = av[options_string_index];
-        if (is_options_string_valid(options_string) != 1)
-            return 84;
-    }
+    if (options_string == NULL)
+        return 84;
+    free(options_string);
     return 0;
 }
