@@ -10,8 +10,7 @@
         #define NO_OPTIONS -1
 
 /* FUNCTION PROTOTYPE */
-int get_options_string_index(int ac, char *const *const av);
-int is_valid_option(char option);
 int is_options_string_valid(const char *const options_string);
+char *get_options(int ac, char *const *const av);
 
 #endif /* !OPTIONS_H_ */
