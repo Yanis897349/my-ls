@@ -5,10 +5,12 @@
 ## Build my_ls
 ##
 
-SRC := ./src/Core/options.c
+SRC := ./src/Core/options.c \
+	./src/Core/files.c
 SRC_TEST := ./tests/test_my_ls.c \
-	./tests/test_options.c
-BUILD_SRC := ./src/my_ls.c
+	./tests/test_options.c \
+	./tests/test_files.c
+MAIN_SRC := ./src/my_ls.c
 CFLAGS := -Wall -Wextra -Werror -I . -L . -lmy
 LIB_PATH := ./lib/my
 NAME_TEST := unit_tests
@@ -28,7 +30,7 @@ fclean_lib:
 	make fclean -C $(LIB_PATH)
 
 $(NAME): build_lib
-	$(CC) $(BUILD_SRC) $(SRC) $(CFLAGS) -o $(NAME)
+	$(CC) $(MAIN_SRC) $(SRC) $(CFLAGS) -o $(NAME)
 
 clean: clean_lib
 	rm -f $(NAME)
