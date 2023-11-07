@@ -7,7 +7,8 @@
 
 SRC := ./src/Core/options.c \
 	./src/Core/files.c \
-	./src/Core/directories.c
+	./src/Core/directories.c \
+	./src/Core/display.c
 SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_options.c \
 	./tests/test_files.c \

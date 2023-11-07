@@ -38,28 +38,45 @@ static int get_directories_count(char **files_path)
     return directories_count;
 }
 
-void close_directories(DIR **directories)
+static int set_directory(char *name, directory_t **directory)
+{
+    *directory = malloc(sizeof(directory_t));
+    if (*directory == NULL)
+        return 84;
+    (*directory)->name = name;
+    (*directory)->stream = opendir(name);
+    (*directory)->stat = malloc(sizeof(struct stat));
+    if ((*directory)->stat == NULL)
+        return 84;
+    if (stat(name, (*directory)->stat) == -1)
+        return 84;
+    return 0;
+}
+
+void free_directories(directory_t **directories)
 {
     for (int i = 0; directories[i] != NULL; i++) {
-        closedir(directories[i]);
+        free(directories[i]->stat);
+        closedir(directories[i]->stream);
+        free(directories[i]);
     }
     free(directories);
 }
 
-DIR **open_directories(char **files_path)
+directory_t **open_directories(char **files_path)
 {
-    DIR **directories = NULL;
+    directory_t **directories = NULL;
     int directories_index = 0;
     int directories_count = get_directories_count(files_path);
 
-    directories = malloc(sizeof(DIR *) * (directories_count + 1));
+    directories = malloc(sizeof(directory_t *) * (directories_count + 1));
     if (directories == NULL)
         return NULL;
-    my_memset(directories, 0, sizeof(DIR *) * (directories_count + 1));
+    my_memset(directories, 0, sizeof(directory_t *) * (directories_count + 1));
     for (int i = 0; files_path[i] != NULL; i++) {
-        if (opendir(files_path[i]) != NULL) {
-            directories[directories_index++] = opendir(files_path[i]);
-        }
+        if (set_directory(files_path[i],
+            &directories[directories_index++]) == 84)
+            return NULL;
     }
     directories[directories_count] = NULL;
     return directories;

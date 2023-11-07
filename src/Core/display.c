@@ -11,19 +11,24 @@
 #include <unistd.h>
 #include <dirent.h>
 
-void basic_display(directory_t **directories)
+static void read_and_display_directory(directory_t *directory)
 {
     struct dirent *dirent = NULL;
 
-    for (int i = 0; directories[i] != NULL; i++) {
-        dirent = readdir(directories[i]->stream);
-        while (dirent != NULL) {
-            if (dirent->d_name[0] != '.') {
-                write(1, dirent->d_name, my_strlen(dirent->d_name));
-                write(1, "  ", 2);
-            }
-            dirent = readdir(directories[i]->stream);
+    dirent = readdir(directory->stream);
+    while (dirent != NULL) {
+        if (dirent->d_name[0] != '.') {
+            write(1, dirent->d_name, my_strlen(dirent->d_name));
+            write(1, "  ", 2);
         }
+        dirent = readdir(directory->stream);
+    }
+}
+
+void basic_display(directory_t **directories)
+{
+    for (int i = 0; directories[i] != NULL; i++) {
+        read_and_display_directory(directories[i]);
     }
     write(1, "\n", 1);
 }
