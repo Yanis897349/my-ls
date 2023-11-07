@@ -16,7 +16,7 @@ LIB_PATH := ./lib/my
 NAME_TEST := unit_tests
 NAME := my_ls
 
-.PHONY: all build_lib clean_lib fclean_lib clean fclean re tests_run
+.PHONY: all build_lib clean_lib fclean_lib clean fclean re tests_run valgrind
 
 all: $(NAME)
 
@@ -42,6 +42,9 @@ re: fclean all
 tests_run: build_lib
 	$(CC) $(SRC) $(SRC_TEST) $(CFLAGS) -o $(NAME_TEST) --coverage -lcriterion
 	./$(NAME_TEST)
+
+valgrind: all
+	valgrind -s --leak-check=full --error-exitcode=1 ./$(NAME)
 
 tests_clean:
 	rm -f $(NAME_TEST)
