@@ -88,6 +88,7 @@ STRINGS_FUNCS := ./strings/my_revstr.c \
 				 ./strings/my_strdup.c \
 				 ./strings/my_strcpy.c \
 				 ./strings/my_memcpy.c \
+				 ./strings/my_memset.c \
 
 SRC := $(CTYPE_FUNCS) \
 	   $(MATH_FUNCS) \
