@@ -9,6 +9,7 @@
     #define FILES_H_
 
 /* FUNCTION PROTOTYPE */
+
 char **get_files(int ac, char *const *const av);
 
 #endif /* !FILES_H_ */
