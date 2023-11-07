@@ -19,7 +19,6 @@ int main(int ac, char **av)
         return 84;
     if (files_path == NULL)
         return 84;
-    print_2d_array(files_path);
     free(files_path);
     free(options_string);
     return 0;
