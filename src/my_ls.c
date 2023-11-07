@@ -6,14 +6,20 @@
 */
 
 #include "Core/options.h"
+#include "Core/files.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int main(int ac, char **av)
 {
     char *options_string = get_options(ac, av);
+    char **files_path = get_files(ac, av);
 
     if (options_string == NULL)
         return 84;
+    if (files_path == NULL)
+        return 84;
+    free(files_path);
     free(options_string);
     return 0;
 }

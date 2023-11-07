@@ -5,7 +5,6 @@
 ** Get my_ls options
 */
 
-#include "options.h"
 #include "include/my_strings.h"
 #include <stdlib.h>
 
