@@ -6,12 +6,12 @@
 */
 
 #include "include/my_strings.h"
+#include "options.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 static int is_valid_option(char option)
 {
-    const char *const VALID_OPTIONS = "alRdrt";
-
     for (int i = 0; VALID_OPTIONS[i]; i++)
         if (option == VALID_OPTIONS[i])
             return 1;
@@ -30,11 +30,23 @@ static int get_options_count(int ac, char *const *const av)
     return options_count;
 }
 
+static void print_invalid_option(char option)
+{
+    write(2, "my_ls: invalid option -- '", 27);
+    write(2, &option, 1);
+    write(2, "'\n", 2);
+}
+
 int is_options_string_valid(const char *const options_string)
 {
-    for (int options_index = 1; options_string[options_index]; options_index++)
-        if (!is_valid_option(options_string[options_index]))
-            return options_index;
+    int options_index = 0;
+
+    for (; options_string[options_index] != '\0'; options_index++) {
+        if (!is_valid_option(options_string[options_index])) {
+            print_invalid_option(options_string[options_index]);
+            return 84;
+        }
+    }
     return 1;
 }
 
@@ -46,6 +58,7 @@ char *get_options(int ac, char *const *const av)
     options_string = malloc(options_count + 1);
     if (options_string == NULL)
         return NULL;
+    my_memset(options_string, 0, options_count + 1);
     for (int i = 1; i < ac; i++) {
         if (av[i][0] == '-') {
             my_strcat(options_string, av[i] + 1);

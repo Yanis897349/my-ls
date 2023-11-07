@@ -7,7 +7,7 @@
 
 #ifndef OPTIONS_H_
     #define OPTIONS_H_
-        #define NO_OPTIONS -1
+    #define VALID_OPTIONS "alRdrt"
 
 /* FUNCTION PROTOTYPE */
 int is_options_string_valid(const char *const options_string);

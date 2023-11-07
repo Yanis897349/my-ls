@@ -19,6 +19,8 @@ int main(int ac, char **av)
         return 84;
     if (files_path == NULL)
         return 84;
+    if (is_options_string_valid(options_string) == 84)
+        return 84;
     free(files_path);
     free(options_string);
     return 0;
