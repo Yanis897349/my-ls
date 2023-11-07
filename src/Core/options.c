@@ -32,7 +32,7 @@ static int get_options_count(int ac, char *const *const av)
 
 static void print_invalid_option(char option)
 {
-    write(2, "my_ls: invalid option -- '", 27);
+    write(2, "my_ls: invalid option -- '", 26);
     write(2, &option, 1);
     write(2, "'\n", 2);
 }
