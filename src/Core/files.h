@@ -1,15 +1,21 @@
 /*
 ** EPITECH PROJECT, 2023
-** FILES_H_
+** my_ls
 ** File description:
-** Header file for file.c
+** Managing files in my ls
 */
 
 #ifndef FILES_H_
     #define FILES_H_
+    #include <sys/stat.h>
 
-/* FUNCTION PROTOTYPE */
+typedef struct file_s {
+    char *path;
+    int is_directory;
+    struct stat *stat;
+} file_t;
 
-char **get_files(int ac, char *const *const av);
+void free_files_list(file_t **files_list);
+file_t **get_files_list(char **files_path);
 
 #endif /* !FILES_H_ */

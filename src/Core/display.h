@@ -7,9 +7,9 @@
 
 #ifndef DISPLAY_H_
     #define DISPLAY_H_
-    #include "directories.h"
+    #include "files.h"
 
 /* FUNCTION PROTOTYPE */
-void basic_display(directory_t **directories);
+void basic_display(file_t **files_list);
 
 #endif /* !DISPLAY_H_ */
