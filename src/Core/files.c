@@ -21,12 +21,30 @@ static int get_files_count(int ac, char *const *const av)
     return files_count;
 }
 
+static char **no_files_case(void)
+{
+    char **files_path = malloc(sizeof(char *) * 2);
+
+    if (files_path == NULL)
+        return NULL;
+    files_path[0] = malloc(2);
+    if (files_path[0] == NULL)
+        return NULL;
+    files_path[0] = ".";
+    files_path[1] = NULL;
+    return files_path;
+}
+
 char **get_files(int ac, char *const *const av)
 {
     char **files_path = NULL;
     int files_count = get_files_count(ac, av);
     int files_index = 0;
 
+    if (files_count == 0) {
+        files_path = no_files_case();
+        return files_path;
+    }
     files_path = malloc(sizeof(char *) * (files_count + 1));
     if (files_path == NULL)
         return NULL;
