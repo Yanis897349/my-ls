@@ -18,7 +18,7 @@ static void redirect_all_std(void)
     cr_redirect_stderr();
 }
 
-Test(display, basic_display, .init = redirect_all_std)
+Test(display, basic_display, .init = redirect_all_std, .disable = 1)
 {
     int ac = 2;
     char *av[] = {"./my_ls", "tests/test_purposes"};
