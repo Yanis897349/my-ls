@@ -46,9 +46,9 @@ Test(files, multiple_files_mixed_options)
 
 Test(files, no_file)
 {
-    int ac = 2;
-    char *av[] = {"./my_ls", "-l"};
+    int ac = 1;
+    char *av[] = {"./my_ls"};
     char **files_path = get_files(ac, av);
 
-    cr_assert_null(files_path[0]);
+    cr_assert_not_null(files_path[0]);
 }
