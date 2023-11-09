@@ -46,7 +46,8 @@ char **get_files_from_args(int ac, char *const *const av)
         return NULL;
     for (int i = 1; i < ac; i++) {
         if (av[i][0] != '-') {
-            files_path[files_index++] = av[i];
+            files_path[files_index] = av[i];
+            files_index++;
         }
     }
     files_path[files_count] = NULL;
