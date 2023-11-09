@@ -15,11 +15,13 @@ static void int_to_str(char *str, long long n, int precision)
     int i = 0;
 
     while (n > 0) {
-        str[i++] = (n % 10) + '0';
+        str[i] = (n % 10) + '0';
         n = n / 10;
+        i++;
     }
     while (i < precision) {
-        str[i++] = '0';
+        str[i] = '0';
+        i++;
     }
     str[i] = '\0';
     my_revstr(str);
@@ -28,7 +30,8 @@ static void int_to_str(char *str, long long n, int precision)
 static void float_to_int_str(char *str, long long int_part, int is_negative)
 {
     if (is_negative) {
-        *str++ = '-';
+        *str = '-';
+        *str = *str + 1;
         int_to_str(str, -int_part, 0);
     } else {
         int_to_str(str, int_part, 0);
