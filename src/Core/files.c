@@ -8,21 +8,12 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <string.h>
 #include "include/my_strings.h"
+#include "display_error.h"
 #include "files.h"
-
-static void print_invalid_file(char *filepath)
-{
-    write(2, "my_ls: cannot access '", 22);
-    write(2, filepath, my_strlen(filepath));
-    write(2, "': ", 3);
-    write(2, strerror(errno), my_strlen(strerror(errno)));
-    write(2, "\n", 1);
-}
+#include "directory.h"
 
 static int get_valid_files_count(char **files_path)
 {
@@ -44,26 +35,21 @@ static int set_file(char *filepath, file_t **file)
     *file = malloc(sizeof(file_t));
     if (*file == NULL)
         return 84;
-    (*file)->path = filepath;
+    my_memset(*file, 0, sizeof(file_t));
+    (*file)->path = my_strdup(filepath);
     (*file)->stat = malloc(sizeof(struct stat));
     if ((*file)->stat == NULL)
         return 84;
     if (stat(filepath, (*file)->stat) == -1)
         return 84;
-    if (S_ISDIR((*file)->stat->st_mode))
+    if (S_ISDIR((*file)->stat->st_mode)) {
         (*file)->is_directory = 1;
-    else
+        if (set_directory_content(file) == 84)
+            return 84;
+    } else {
         (*file)->is_directory = 0;
-    return 0;
-}
-
-void free_files_list(file_t **files_list)
-{
-    for (int i = 0; files_list[i] != NULL; i++) {
-        free(files_list[i]->stat);
-        free(files_list[i]);
     }
-    free(files_list);
+    return 0;
 }
 
 file_t **get_files_list(char **files_path)
@@ -76,8 +62,8 @@ file_t **get_files_list(char **files_path)
         return NULL;
     my_memset(files_list, 0, sizeof(file_t *) * (files_count + 1));
     for (int i = 0; files_path[i] != NULL; i++) {
-        if (set_file(files_path[i], &files_list[files_index++]) == 84)
-            files_index--;
+        if (set_file(files_path[i], &files_list[files_index]) != 84)
+            files_index++;
     }
     files_list[files_count] = NULL;
     return files_list;
