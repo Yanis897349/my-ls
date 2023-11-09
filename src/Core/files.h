@@ -12,10 +12,10 @@
 typedef struct file_s {
     char *path;
     int is_directory;
+    struct file_s **content;
     struct stat *stat;
 } file_t;
 
-void free_files_list(file_t **files_list);
 file_t **get_files_list(char **files_path);
 
 #endif /* !FILES_H_ */
