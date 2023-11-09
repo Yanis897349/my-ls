@@ -8,6 +8,7 @@
 #include "src/Core/files.h"
 #include "src/Core/display.h"
 #include "src/Helpers/args.h"
+#include "src/Core/memory.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <stdlib.h>
@@ -18,7 +19,7 @@ static void redirect_all_std(void)
     cr_redirect_stderr();
 }
 
-Test(display, basic_display, .init = redirect_all_std, .disabled = 1)
+Test(display, basic_display, .init = redirect_all_std)
 {
     int ac = 2;
     char *av[] = {"./my_ls", "tests/test_purposes"};
@@ -26,7 +27,7 @@ Test(display, basic_display, .init = redirect_all_std, .disabled = 1)
     file_t **files_list = get_files_list(files_path);
 
     basic_display(files_list);
-    cr_assert_stdout_eq_str("file  test1\n");
+    cr_assert_stdout_eq_str("file  test1  test2\n");
     free_files_list(files_list);
     free(files_path);
 }
