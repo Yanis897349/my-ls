@@ -7,6 +7,7 @@
 
 #include "Core/options.h"
 #include "Core/files.h"
+#include "Core/memory.h"
 #include "Core/display.h"
 #include "Helpers/args.h"
 #include <stdlib.h>
