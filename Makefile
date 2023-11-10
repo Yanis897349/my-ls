@@ -18,7 +18,8 @@ SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_options.c \
 	./tests/test_args.c \
 	./tests/test_files.c \
-	./tests/test_display.c
+	./tests/test_display.c \
+	./tests/test_sort.c
 MAIN_SRC := ./src/my_ls.c
 CFLAGS := -Wall -Wextra -Werror -I. -I./src/ -L . -lmy
 LIB_PATH := ./lib/my

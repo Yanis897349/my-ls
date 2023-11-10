@@ -27,7 +27,7 @@ Test(display, basic_display, .init = redirect_all_std)
     file_t **files_list = get_files_list(files_path);
 
     basic_display(files_list);
-    cr_assert_stdout_eq_str("file  test1  test2\n");
+    cr_assert_stdout_eq_str("AFile  bFile  file  test1  test2\n");
     free_files_list(files_list);
     free(files_path);
 }
