@@ -16,22 +16,20 @@
 
 int main(int ac, char **av)
 {
-    char *options_string = get_options(ac, av);
+    options_t *options = create_options(ac, av);
     char **files_path = get_files_from_args(ac, av);
     file_t **files_list = NULL;
 
-    if (options_string == NULL)
+    if (options == NULL)
         return 84;
     if (files_path == NULL)
-        return 84;
-    if (is_options_string_valid(options_string) == 84)
         return 84;
     files_list = get_files_list(files_path);
     if (files_list == NULL)
         return 84;
-    basic_display(files_list);
+    basic_display(files_list, options);
     free_files_list(files_list);
     free(files_path);
-    free(options_string);
+    free(options);
     return 0;
 }
