@@ -9,5 +9,6 @@
     #define DISPLAY_ERROR_H_
 
 void print_invalid_file(char *filepath);
+void print_invalid_option(char option);
 
 #endif /* !DISPLAY_ERROR_H_ */
