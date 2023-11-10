@@ -16,6 +16,7 @@ static void swap_pointer(file_t **a, file_t **b)
     *a = *b;
     *b = tmp;
 }
+
 static void is_greater(file_t **files_list, int i, int j)
 {
     char *path_i = my_strdup(files_list[i]->path);
