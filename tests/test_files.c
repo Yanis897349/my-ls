@@ -5,9 +5,9 @@
 ** Unit testing getting files stats from my_ls
 */
 
-#include "src/Core/files.h"
-#include "src/Core/memory.h"
-#include "src/Helpers/args.h"
+#include "Core/files.h"
+#include "Helpers/memory.h"
+#include "Helpers/args.h"
 #include <criterion/criterion.h>
 #include <stdlib.h>
 

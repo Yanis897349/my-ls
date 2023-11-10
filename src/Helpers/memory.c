@@ -5,7 +5,7 @@
 ** Manage memory for my_ls
 */
 
-#include "files.h"
+#include "Core/files.h"
 #include <stdlib.h>
 
 void free_files_list(file_t **files_list)
