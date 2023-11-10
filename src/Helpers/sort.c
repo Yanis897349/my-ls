@@ -7,7 +7,7 @@
 
 #include "Core/files.h"
 #include "include/my_strings.h"
-#include <stdio.h>
+#include <stdlib.h>
 
 static void swap_pointer(file_t **a, file_t **b)
 {
@@ -16,12 +16,18 @@ static void swap_pointer(file_t **a, file_t **b)
     *a = *b;
     *b = tmp;
 }
-
 static void is_greater(file_t **files_list, int i, int j)
 {
-    if (my_strcmp(files_list[i]->path, files_list[j]->path) > 0) {
+    char *path_i = my_strdup(files_list[i]->path);
+    char *path_j = my_strdup(files_list[j]->path);
+
+    path_i = my_strlowcase(path_i);
+    path_j = my_strlowcase(path_j);
+    if (my_strcmp(path_i, path_j) > 0) {
         swap_pointer(&files_list[i], &files_list[j]);
     }
+    free(path_i);
+    free(path_j);
 }
 
 static void sort_files(file_t **files_list)
