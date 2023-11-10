@@ -8,8 +8,6 @@
 #ifndef ARGS_H_
     #define ARGS_H_
 
-/* FUNCTION PROTOTYPE */
-
 char **get_files_from_args(int ac, char *const *const av);
 
 #endif /* !ARGS_H_ */
