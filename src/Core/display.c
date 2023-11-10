@@ -5,6 +5,7 @@
 ** Basic display behavior of my_ls
 */
 
+#include "Core/options.h"
 #include "files.h"
 #include "display.h"
 #include "Helpers/sort.h"
@@ -15,7 +16,7 @@
 #include <dirent.h>
 #include <stdio.h>
 
-static void display_directory(file_t *file)
+static void display_directory(file_t *file, options_t *options)
 {
     char *filename = NULL;
 
@@ -23,7 +24,7 @@ static void display_directory(file_t *file)
     write(1, ":\n", 2);
     for (int i = 0; file->content[i] != NULL; i++) {
         filename = extract_name_from_path(file->content[i]->path);
-        if (filename[0] == '.')
+        if (filename[0] == '.' && !options->is_all)
             continue;
         write(1, filename, my_strlen(filename));
         if (file->content[i + 1] != NULL)
@@ -32,13 +33,13 @@ static void display_directory(file_t *file)
     write(1, "\n\n", 2);
 }
 
-static void display_one_directory(file_t *file)
+static void display_one_directory(file_t *file, options_t *options)
 {
     char *filename = NULL;
 
     for (int i = 0; file->content[i] != NULL; i++) {
         filename = extract_name_from_path(file->content[i]->path);
-        if (filename[0] == '.')
+        if (filename[0] == '.' && !options->is_all)
             continue;
         write(1, filename, my_strlen(filename));
         if (file->content[i + 1] != NULL)
@@ -47,10 +48,10 @@ static void display_one_directory(file_t *file)
     write(1, "\n", 1);
 }
 
-static void process_file(file_t *file, int is_last_file)
+static void process_file(file_t *file, int is_last_file, options_t *options)
 {
     if (file->is_directory) {
-        display_directory(file);
+        display_directory(file, options);
     } else {
         write(1, file->path, my_strlen(file->path));
         if (!is_last_file)
@@ -70,7 +71,7 @@ static int get_last_file_index(file_t **files_list)
     return last_file_index;
 }
 
-void basic_display(file_t **files_list)
+void basic_display(file_t **files_list, options_t *options)
 {
     int last_file_index = get_last_file_index(files_list);
     int directory_exists = 0;
@@ -78,18 +79,18 @@ void basic_display(file_t **files_list)
     sort_alphabetically(files_list);
     if (files_list[0] != NULL && files_list[0]->is_directory
         && files_list[1] == NULL) {
-            return display_one_directory(files_list[0]);
+            return display_one_directory(files_list[0], options);
     }
     for (int i = 0; files_list[i] != NULL; i++) {
         if (files_list[i]->is_directory) {
             directory_exists = 1;
             continue;
         }
-        process_file(files_list[i], i == last_file_index);
+        process_file(files_list[i], i == last_file_index, options);
     }
     if (directory_exists)
         write(1, "\n\n", 2);
     for (int i = 0; files_list[i] != NULL; i++)
         if (files_list[i]->is_directory)
-            process_file(files_list[i], 0);
+            process_file(files_list[i], 0, options);
 }

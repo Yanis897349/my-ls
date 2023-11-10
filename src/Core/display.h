@@ -8,8 +8,8 @@
 #ifndef DISPLAY_H_
     #define DISPLAY_H_
     #include "files.h"
+    #include "options.h"
 
-/* FUNCTION PROTOTYPE */
-void basic_display(file_t **files_list);
+void basic_display(file_t **files_list, options_t *options);
 
 #endif /* !DISPLAY_H_ */
