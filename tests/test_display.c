@@ -5,10 +5,10 @@
 ** Unit testing display from my_ls
 */
 
-#include "src/Core/files.h"
-#include "src/Core/display.h"
-#include "src/Helpers/args.h"
-#include "src/Core/memory.h"
+#include "Core/files.h"
+#include "Core/display.h"
+#include "Helpers/args.h"
+#include "Helpers/memory.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <stdlib.h>

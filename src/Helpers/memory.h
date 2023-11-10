@@ -7,7 +7,7 @@
 
 #ifndef MEMORY_H_
     #define MEMORY_H_
-    #include "files.h"
+    #include "Core/files.h"
 
 void free_files_list(file_t **files_list);
 

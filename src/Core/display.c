@@ -7,8 +7,8 @@
 
 #include "files.h"
 #include "display.h"
-#include "path.h"
 #include "Helpers/sort.h"
+#include "Helpers/path.h"
 #include "include/my_strings.h"
 #include <stddef.h>
 #include <unistd.h>

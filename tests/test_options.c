@@ -5,7 +5,7 @@
 ** Unit testing options parsing from my_ls
 */
 
-#include "src/Core/options.h"
+#include "Core/options.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include <stdlib.h>

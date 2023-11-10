@@ -10,10 +10,10 @@ SRC := ./src/Core/options.c \
 	./src/Core/directory.c \
 	./src/Core/display.c \
 	./src/Core/display_error.c \
-	./src/Core/memory.c \
-	./src/Core/path.c \
 	./src/Helpers/args.c \
-	./src/Helpers/sort.c
+	./src/Helpers/sort.c \
+	./src/Helpers/path.c \
+	./src/Helpers/memory.c
 SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_options.c \
 	./tests/test_args.c \

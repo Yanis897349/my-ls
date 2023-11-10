@@ -7,9 +7,9 @@
 
 #include "Helpers/sort.h"
 #include "Helpers/args.h"
+#include "Helpers/memory.h"
+#include "Helpers/path.h"
 #include "Core/files.h"
-#include "Core/memory.h"
-#include "Core/path.h"
 #include <criterion/criterion.h>
 
 Test(sort, basic_number_sort)
