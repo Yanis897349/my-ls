@@ -38,12 +38,43 @@ static void is_greater(file_t **files_list, int i, int j)
     free(path_j);
 }
 
-static void sort_files(file_t **files_list)
+static void is_older(file_t **files_list, int i, int j)
+{
+    long int time_i = files_list[i]->stat->st_mtime;
+    long int time_j = files_list[j]->stat->st_mtime;
+
+    if (time_i < time_j)
+        swap_pointer(&files_list[i], &files_list[j]);
+}
+
+static void sort_files_by_alpha(file_t **files_list)
 {
     for (int i = 0; files_list[i] != NULL; i++) {
         for (int j = i + 1; files_list[j] != NULL; j++) {
             is_greater(files_list, i, j);
         }
+    }
+}
+
+static void sort_files_by_time(file_t **files_list)
+{
+    for (int i = 0; files_list[i] != NULL; i++) {
+        for (int j = i + 1; files_list[j] != NULL; j++) {
+            is_older(files_list, i, j);
+        }
+    }
+}
+
+void sort_time(file_t **files_list)
+{
+    if (!files_list[0]->is_directory && files_list[1] == NULL)
+        return;
+    for (int i = 0; files_list[i] != NULL; i++) {
+        if (files_list[i]->is_directory)
+            sort_files_by_time(files_list[i]->content);
+    }
+    for (int i = 0; files_list[i] != NULL; i++) {
+        sort_files_by_time(files_list);
     }
 }
 
@@ -53,9 +84,24 @@ void sort_alphabetically(file_t **files_list)
         return;
     for (int i = 0; files_list[i] != NULL; i++) {
         if (files_list[i]->is_directory)
-            sort_files(files_list[i]->content);
+            sort_files_by_alpha(files_list[i]->content);
     }
     for (int i = 0; files_list[i] != NULL; i++) {
-        sort_files(files_list);
+        sort_files_by_alpha(files_list);
+    }
+}
+
+void sort_reverse(file_t **files_list)
+{
+    if (!files_list[0]->is_directory && files_list[1] == NULL)
+        return;
+    for (int i = 0; files_list[i] != NULL; i++) {
+        if (files_list[i]->is_directory)
+            sort_reverse(files_list[i]->content);
+    }
+    for (int i = 0; files_list[i] != NULL; i++) {
+        for (int j = i + 1; files_list[j] != NULL; j++) {
+            swap_pointer(&files_list[i], &files_list[j]);
+        }
     }
 }
