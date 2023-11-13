@@ -16,6 +16,15 @@
 #include <dirent.h>
 #include <stdio.h>
 
+static void display_only_name(file_t **files_list)
+{
+    for (int i = 0; files_list[i] != NULL; i++) {
+        write(1, files_list[i]->path, my_strlen(files_list[i]->path));
+        if (files_list[i + 1] != NULL)
+            write(1, "  ", 2);
+    }
+}
+
 static void display_directory(file_t *file, options_t *options)
 {
     char *filename = NULL;
@@ -71,16 +80,16 @@ static int get_last_file_index(file_t **files_list)
     return last_file_index;
 }
 
-void basic_display(file_t **files_list, options_t *options)
+void display_methods(file_t **files_list, options_t *options)
 {
     int last_file_index = get_last_file_index(files_list);
     int directory_exists = 0;
 
-    sort_alphabetically(files_list);
+    if (options->is_dir_only)
+        return display_only_name(files_list);
     if (files_list[0] != NULL && files_list[0]->is_directory
-        && files_list[1] == NULL) {
+        && files_list[1] == NULL)
             return display_one_directory(files_list[0], options);
-    }
     for (int i = 0; files_list[i] != NULL; i++) {
         if (files_list[i]->is_directory) {
             directory_exists = 1;
@@ -93,4 +102,23 @@ void basic_display(file_t **files_list, options_t *options)
     for (int i = 0; files_list[i] != NULL; i++)
         if (files_list[i]->is_directory)
             process_file(files_list[i], 0, options);
+}
+
+void sort_before_display(file_t **files_list, options_t *options)
+{
+    int is_sorted = 0;
+    sort_options_t sort_options[] = {
+        {&sort_time, &options->is_time_sort},
+        {&sort_reverse, &options->is_reverse_sort}
+    };
+
+    for (int i = 0; i < 2; i++) {
+        if (*sort_options[i].option_flag) {
+            sort_options[i].function(files_list);
+            is_sorted = 1;
+        }
+    }
+    if (!is_sorted)
+        sort_alphabetically(files_list);
+    display_methods(files_list, options);
 }
