@@ -88,14 +88,17 @@ STRINGS_FUNCS := ./strings/my_revstr.c \
 				 ./strings/my_strdup.c \
 				 ./strings/my_strcpy.c \
 				 ./strings/my_memcpy.c \
-				 ./strings/my_memset.c \
+				 ./strings/my_memset.c
+
+STD_FUNCS = ./std/my_realloc.c
 
 SRC := $(CTYPE_FUNCS) \
 	   $(MATH_FUNCS) \
 	   $(SORT_FUNCS) \
 	   $(IO_FUNCS) \
 	   $(IO_FUNCS_PRINTF) \
-	   $(STRINGS_FUNCS)
+	   $(STRINGS_FUNCS) \
+	   $(STD_FUNCS)
 CFLAGS := -Wall -Wextra -Werror -I .
 OBJ := $(SRC:.c=.o)
 LIB_DIR := ../../
@@ -117,6 +120,7 @@ $(NAME): $(OBJ)
 	@cp -r ./io/my_io.h $(INCLUDE_DIR)
 	@cp -r ./strings/my_strings.h $(INCLUDE_DIR)
 	@cp -r ./io/printf/my_printf.h $(INCLUDE_DIR)
+	@cp -r ./std/my_std.h $(INCLUDE_DIR)
 
 clean:
 	@rm -f $(OBJ)
