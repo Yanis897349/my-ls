@@ -7,7 +7,9 @@
 
 #include "files.h"
 #include "include/my_strings.h"
+#include "include/my_std.h"
 #include <dirent.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -58,7 +60,9 @@ static int handle_error(DIR *directory)
 
 static int update_directory_content(file_t **dir, struct dirent *dirent, int i)
 {
-    file_t **temp = realloc((*dir)->content, sizeof(file_t *) * (i + 2));
+    size_t old_size = sizeof(file_t *) * (i + 1);
+    size_t new_size = sizeof(file_t *) * (i + 2);
+    file_t **temp = my_realloc((*dir)->content, old_size, new_size);
 
     if (temp == NULL) {
         return handle_error(NULL);
