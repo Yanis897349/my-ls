@@ -6,19 +6,12 @@
 */
 #include <stddef.h>
 
-void *my_memcpy(void *dest, void *src, size_t n)
+void *my_memcpy(void *dest, const void *src, size_t size)
 {
-    char *dest_bytes = (char *)dest;
-    char *src_bytes = (char *)src;
-    size_t byte_count = 0;
+    char *dest_char = dest;
+    const char *src_char = src;
 
-    while (src_bytes[byte_count] != '\0') {
-        dest_bytes[byte_count] = src_bytes[byte_count];
-        byte_count++;
-    }
-    while (byte_count < n) {
-        dest_bytes[byte_count] = 0;
-        byte_count++;
-    }
-    return dest_bytes;
+    for (size_t i = 0; i < size; i++)
+        dest_char[i] = src_char[i];
+    return dest;
 }
