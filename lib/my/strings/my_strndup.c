@@ -12,17 +12,16 @@
 char *my_strndup(char const *src, int n)
 {
     char *my_str;
-    size_t src_len;
+    int src_len;
+    int len;
 
     if (src == NULL)
         return NULL;
     src_len = my_strlen(src);
-    my_str = (char *)malloc(src_len + 1);
+    len = (n < src_len) ? n : src_len;
+    my_str = (char *)malloc(len + 1);
     if (my_str == NULL)
         return NULL;
-    for (int i = 0; i < n; i++) {
-        my_str[i] = src[i];
-    }
-    my_str[src_len] = '\0';
-    return my_str;
+    my_str[len] = '\0';
+    return my_strncpy(my_str, src, len);
 }
