@@ -22,9 +22,8 @@ static void convert_to_str(char *str, const char *base, size_t len, uint n)
     my_revstr(str);
 }
 
-char *my_putnbr_base(int nbr, const char *base)
+char *my_putnbr_base(int nbr, const char *base, char *str)
 {
-    char str[33];
     size_t base_len = my_strlen(base);
     uint abs_nbr = nbr;
 
@@ -33,5 +32,5 @@ char *my_putnbr_base(int nbr, const char *base)
         my_putchar('-');
     }
     convert_to_str(str, base, base_len, abs_nbr);
-    return my_strdup(str);
+    return str;
 }

@@ -79,8 +79,8 @@ char **my_str_to_word_array(const char *str)
 
     if (!str)
         return NULL;
-    words_count = count_words(str) + 1;
-    array = (char **)malloc(words_count * sizeof(char *));
+    words_count = count_words(str);
+    array = (char **)malloc(sizeof(char *) * (words_count + 1));
     if (array == NULL)
         return NULL;
     return fill_array(str, array);

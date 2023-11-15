@@ -11,9 +11,10 @@
 
 int my_put_nbr(int nb)
 {
+    char str[33];
     char *dec_base = "0123456789";
-    char *result = my_putnbr_base(nb, dec_base);
 
-    my_putstr(result);
-    return my_strlen(result);
+    my_putnbr_base(nb, dec_base, str);
+    my_putstr(str);
+    return my_strlen(str);
 }
