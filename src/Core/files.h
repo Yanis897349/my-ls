@@ -7,6 +7,7 @@
 
 #ifndef FILES_H_
     #define FILES_H_
+    #define MAX_FILENAME_LENGTH 256
     #include "options.h"
     #include <sys/stat.h>
 

@@ -7,6 +7,7 @@
 
 #include "Core/files.h"
 #include "Core/options.h"
+#include "Display/symbolic.h"
 #include "Helpers/path.h"
 #include "include/my_strings.h"
 #include "include/my_io.h"
@@ -44,9 +45,9 @@ static void print_time(char **time_array)
 
 static void print_long_file(file_t *file)
 {
-    char *filename = extract_name_from_path(file->path);
     char *str = ctime(&file->stat->st_mtime);
     char **time_arr = my_str_to_word_array(str);
+    char filetype = get_filetype(file);
 
     my_putchar(get_filetype(file));
     print_permissions(file);
@@ -58,7 +59,7 @@ static void print_long_file(file_t *file)
     my_putchar(' ');
     my_put_nbr(file->stat->st_size);
     print_time(time_arr);
-    my_putstr(filename);
+    handle_symbolic(file, filetype);
     for (int i = 0; time_arr[i] != NULL; i++)
         free(time_arr[i]);
     free(time_arr);
