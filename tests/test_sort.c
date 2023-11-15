@@ -16,10 +16,11 @@ Test(sort, basic_number_sort)
 {
     int ac = 2;
     char *av[] = {"./my_ls", "tests/test_purposes"};
+    options_t *options = create_options(ac, av);
     char *sorted[] = {"AFile", "bFile", "file",
         "test1", "test2", NULL};
     char **files_path = get_files_from_args(ac, av);
-    file_t **files_list = get_files_list(files_path);
+    file_t **files_list = get_files_list(files_path, options);
     char *filename = NULL;
 
     sort_alphabetically(files_list);
