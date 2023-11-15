@@ -6,6 +6,7 @@
 */
 
 #include "files.h"
+#include "directory.h"
 #include "include/my_strings.h"
 #include "include/my_std.h"
 #include <dirent.h>
@@ -27,6 +28,14 @@ static char *get_complete_path(char *dir_path, char *filename, int len)
     return path;
 }
 
+static int is_directory_empty(char *dir_name, file_t **dir)
+{
+    (*dir)->is_directory = 1;
+    if (my_strcmp(dir_name, ".") == 0 || my_strcmp(dir_name, "..") == 0)
+        return 0;
+    return 1;
+}
+
 static int set_file_properties(file_t **dir, file_t *file, struct dirent *info)
 {
     int path_length = my_strlen((*dir)->path) + my_strlen(info->d_name) + 2;
@@ -39,14 +48,15 @@ static int set_file_properties(file_t **dir, file_t *file, struct dirent *info)
     file->stat = malloc(sizeof(struct stat));
     if (file->stat == NULL)
         return 84;
-    if (stat(file->path, file->stat) == -1) {
+    if (stat(file->path, file->stat) == -1)
         return 84;
-    }
     if (S_ISDIR(file->stat->st_mode)) {
-        file->is_directory = 1;
-    } else {
+        if (is_directory_empty(info->d_name, &file) == 0)
+            return 0;
+        if (set_directory_content(&file) == 84)
+            return 84;
+    } else
         file->is_directory = 0;
-    }
     return 0;
 }
 
