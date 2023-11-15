@@ -19,7 +19,7 @@ int my_putnstr(char const *str, int n);
 int my_putstr_error(char const *str);
 int my_put_float(double x, int precision);
 int my_put_exponent(double x, int precision);
-int my_put_hexadecimal(int n, int is_upper);
+int my_put_hexadecimal(int nb, int is_upper, char *str);
 int my_put_pointer(long int n);
-int my_put_octal(unsigned int n);
+int my_put_octal(unsigned int n, char *str);
 #endif /* MY_IO_H_ */

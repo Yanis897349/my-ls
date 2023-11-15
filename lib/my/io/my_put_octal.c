@@ -9,12 +9,11 @@
 #include "io/my_io.h"
 #include "math/my_math.h"
 
-int my_put_octal(unsigned int nb)
+int my_put_octal(unsigned int nb, char *str)
 {
     char *octal_base = "01234567";
-    char *result;
 
-    result = my_putnbr_base(nb, octal_base);
-    my_putstr(result);
-    return my_strlen(result);
+    my_putnbr_base(nb, octal_base, str);
+    my_putstr(str);
+    return my_strlen(str);
 }
