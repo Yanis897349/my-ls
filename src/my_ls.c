@@ -7,7 +7,7 @@
 
 #include "Core/options.h"
 #include "Core/files.h"
-#include "Core/display.h"
+#include "Display/display.h"
 #include "Helpers/memory.h"
 #include "Helpers/args.h"
 #include <stdlib.h>
@@ -24,7 +24,7 @@ int main(int ac, char **av)
         return 84;
     if (files_path == NULL)
         return 84;
-    files_list = get_files_list(files_path);
+    files_list = get_files_list(files_path, options);
     if (files_list == NULL)
         return 84;
     sort_before_display(files_list, options);
