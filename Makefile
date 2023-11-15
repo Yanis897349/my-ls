@@ -15,7 +15,8 @@ SRC := ./src/Core/options.c \
 	./src/Display/display.c \
 	./src/Display/display_error.c \
 	./src/Display/normal_listing.c \
-	./src/Display/long_listing.c
+	./src/Display/long_listing.c \
+	./src/Display/symbolic.c
 SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_options.c \
 	./tests/test_args.c \
