@@ -90,7 +90,8 @@ STRINGS_FUNCS := ./strings/my_revstr.c \
 				 ./strings/my_memcpy.c \
 				 ./strings/my_memset.c
 
-STD_FUNCS = ./std/my_realloc.c
+STD_FUNCS = ./std/my_realloc.c \
+	./std/my_freearray.c
 
 SRC := $(CTYPE_FUNCS) \
 	   $(MATH_FUNCS) \

@@ -7,6 +7,7 @@
 
 #ifndef FILES_H_
     #define FILES_H_
+    #include "options.h"
     #include <sys/stat.h>
 
 typedef struct file_s {
@@ -16,6 +17,7 @@ typedef struct file_s {
     struct stat *stat;
 } file_t;
 
-file_t **get_files_list(char **files_path);
+char get_filetype(file_t *file);
+file_t **get_files_list(char **files_path, options_t *options);
 
 #endif /* !FILES_H_ */

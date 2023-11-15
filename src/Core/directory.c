@@ -9,24 +9,13 @@
 #include "directory.h"
 #include "include/my_strings.h"
 #include "include/my_std.h"
+#include "Helpers/path.h"
 #include <dirent.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-
-static char *get_complete_path(char *dir_path, char *filename, int len)
-{
-    char *path = malloc(len);
-
-    if (path == NULL)
-        return NULL;
-    my_strcpy(path, dir_path);
-    my_strcat(path, "/");
-    my_strcat(path, filename);
-    return path;
-}
 
 static int is_directory_empty(char *dir_name, file_t **dir)
 {
@@ -36,7 +25,8 @@ static int is_directory_empty(char *dir_name, file_t **dir)
     return 1;
 }
 
-static int set_file_properties(file_t **dir, file_t *file, struct dirent *info)
+static int set_file_properties(file_t **dir, file_t *file, struct dirent *info,
+    options_t *options)
 {
     int path_length = my_strlen((*dir)->path) + my_strlen(info->d_name) + 2;
     char *path = get_complete_path((*dir)->path, info->d_name, path_length);
@@ -53,7 +43,7 @@ static int set_file_properties(file_t **dir, file_t *file, struct dirent *info)
     if (S_ISDIR(file->stat->st_mode)) {
         if (is_directory_empty(info->d_name, &file) == 0)
             return 0;
-        if (set_directory_content(&file) == 84)
+        if (set_directory_content(&file, options) == 84)
             return 84;
     } else
         file->is_directory = 0;
@@ -68,7 +58,8 @@ static int handle_error(DIR *directory)
     return 84;
 }
 
-static int update_directory_content(file_t **dir, struct dirent *dirent, int i)
+static int update_directory_content(file_t **dir, struct dirent *dirent, int i,
+    options_t *options)
 {
     size_t old_size = sizeof(file_t *) * (i + 1);
     size_t new_size = sizeof(file_t *) * (i + 2);
@@ -83,16 +74,34 @@ static int update_directory_content(file_t **dir, struct dirent *dirent, int i)
     if ((*dir)->content[i] == NULL) {
         return handle_error(NULL);
     }
-    if (set_file_properties(dir, (*dir)->content[i], dirent) == 84) {
+    if (set_file_properties(dir, (*dir)->content[i], dirent, options) == 84) {
         return handle_error(NULL);
     }
     return 0;
 }
 
-int set_directory_content(file_t **dir)
+static int fill_directory(file_t **dir, DIR *stream, options_t *options,
+    int *dir_index)
+{
+    struct dirent *dirent = NULL;
+
+    dirent = readdir(stream);
+    while (dirent != NULL) {
+        if (!options->is_all && dirent->d_name[0] == '.') {
+            dirent = readdir(stream);
+            continue;
+        }
+        if (update_directory_content(dir, dirent, (*dir_index), options) == 84)
+            return handle_error(stream);
+        (*dir_index)++;
+        dirent = readdir(stream);
+    }
+    return 0;
+}
+
+int set_directory_content(file_t **dir, options_t *options)
 {
     DIR *directory = opendir((*dir)->path);
-    struct dirent *dirent = NULL;
     int i = 0;
 
     if (directory == NULL)
@@ -101,13 +110,8 @@ int set_directory_content(file_t **dir)
     if ((*dir)->content == NULL)
         return handle_error(directory);
     my_memset((*dir)->content, 0, sizeof(file_t *) * 2);
-    dirent = readdir(directory);
-    while (dirent != NULL) {
-        if (update_directory_content(dir, dirent, i) == 84)
-            return handle_error(directory);
-        i++;
-        dirent = readdir(directory);
-    }
+    if (fill_directory(dir, directory, options, &i) == 84)
+        return 84;
     (*dir)->content[i] = NULL;
     closedir(directory);
     return 0;

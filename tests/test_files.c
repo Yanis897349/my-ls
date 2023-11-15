@@ -16,7 +16,8 @@ Test(files, unique_file)
     int ac = 2;
     char *av[] = {"./my_ls", "src"};
     char **files_path = get_files_from_args(ac, av);
-    file_t **files_list = get_files_list(files_path);
+    options_t *options = create_options(ac, av);
+    file_t **files_list = get_files_list(files_path, options);
 
     cr_assert_str_eq(files_list[0]->path, "src");
     cr_assert_null(files_list[1]);

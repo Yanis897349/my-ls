@@ -10,8 +10,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "Core/options.h"
 #include "include/my_strings.h"
-#include "display_error.h"
+#include "Display/display_error.h"
 #include "files.h"
 #include "directory.h"
 
@@ -30,7 +31,7 @@ static int get_valid_files_count(char **files_path)
     return valid_files_count;
 }
 
-static int set_file(char *filepath, file_t **file)
+static int set_file(char *filepath, file_t **file, options_t *options)
 {
     *file = malloc(sizeof(file_t));
     if (*file == NULL)
@@ -43,16 +44,27 @@ static int set_file(char *filepath, file_t **file)
     if (stat(filepath, (*file)->stat) == -1)
         return 84;
     if (S_ISDIR((*file)->stat->st_mode)) {
-        (*file)->is_directory = 1;
-        if (set_directory_content(file) == 84)
+        if (options->is_dir_only)
+            return 0;
+        if (set_directory_content(file, options) == 84)
             return 84;
+        (*file)->is_directory = 1;
     } else {
         (*file)->is_directory = 0;
     }
     return 0;
 }
 
-file_t **get_files_list(char **files_path)
+char get_filetype(file_t *file)
+{
+    if (S_ISDIR(file->stat->st_mode))
+        return 'd';
+    if (S_ISLNK(file->stat->st_mode))
+        return 'l';
+    return '-';
+}
+
+file_t **get_files_list(char **files_path, options_t *options)
 {
     int files_count = get_valid_files_count(files_path);
     int files_index = 0;
@@ -62,7 +74,7 @@ file_t **get_files_list(char **files_path)
         return NULL;
     my_memset(files_list, 0, sizeof(file_t *) * (files_count + 1));
     for (int i = 0; files_path[i] != NULL; i++) {
-        if (set_file(files_path[i], &files_list[files_index]) != 84)
+        if (set_file(files_path[i], &files_list[files_index], options) != 84)
             files_index++;
     }
     files_list[files_count] = NULL;

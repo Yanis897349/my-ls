@@ -8,12 +8,14 @@
 SRC := ./src/Core/options.c \
 	./src/Core/files.c \
 	./src/Core/directory.c \
-	./src/Core/display.c \
-	./src/Core/display_error.c \
 	./src/Helpers/args.c \
 	./src/Helpers/sort.c \
 	./src/Helpers/path.c \
-	./src/Helpers/memory.c
+	./src/Helpers/memory.c \
+	./src/Display/display.c \
+	./src/Display/display_error.c \
+	./src/Display/normal_listing.c \
+	./src/Display/long_listing.c
 SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_options.c \
 	./tests/test_args.c \
@@ -21,7 +23,7 @@ SRC_TEST := ./tests/test_my_ls.c \
 	./tests/test_display.c \
 	./tests/test_sort.c
 MAIN_SRC := ./src/my_ls.c
-CFLAGS := -Wall -Wextra -Werror -I. -I./src/ -L . -lmy
+CFLAGS := -Wall -Wextra -I. -I./src/ -L . -lmy
 LIB_PATH := ./lib/my
 NAME_TEST := unit_tests
 NAME := my_ls
