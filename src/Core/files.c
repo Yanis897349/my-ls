@@ -22,7 +22,7 @@ static int get_valid_files_count(char **files_path)
     int valid_files_count = 0;
 
     for (int i = 0; files_path[i] != NULL; i++) {
-        if (stat(files_path[i], &file_stat) != -1) {
+        if (lstat(files_path[i], &file_stat) != -1) {
             valid_files_count++;
         } else {
             print_invalid_file(files_path[i]);
@@ -41,7 +41,7 @@ static int set_file(char *filepath, file_t **file, options_t *options)
     (*file)->stat = malloc(sizeof(struct stat));
     if ((*file)->stat == NULL)
         return 84;
-    if (stat(filepath, (*file)->stat) == -1)
+    if (lstat(filepath, (*file)->stat) == -1)
         return 84;
     if (S_ISDIR((*file)->stat->st_mode)) {
         if (options->is_dir_only)

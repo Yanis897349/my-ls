@@ -38,7 +38,7 @@ static int set_file_properties(file_t **dir, file_t *file, struct dirent *info,
     file->stat = malloc(sizeof(struct stat));
     if (file->stat == NULL)
         return 84;
-    if (stat(file->path, file->stat) == -1)
+    if (lstat(file->path, file->stat) == -1)
         return 84;
     if (S_ISDIR(file->stat->st_mode)) {
         if (is_directory_empty(info->d_name, &file) == 0)
