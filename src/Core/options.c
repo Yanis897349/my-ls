@@ -7,7 +7,7 @@
 
 #include "include/my_strings.h"
 #include "options.h"
-#include "display_error.h"
+#include "Display/display_error.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -25,7 +25,7 @@ static int get_options_count(int ac, char *const *const av)
 
     for (int i = 1; i < ac; i++) {
         if (av[i][0] == '-') {
-            options_count += my_strlen(av[i] - 1);
+            options_count += (my_strlen(av[i]) - 1);
         }
     }
     return options_count;

@@ -9,6 +9,6 @@
     #define DIRECTORY_H_
     #include "files.h"
 
-int set_directory_content(file_t **file);
+int set_directory_content(file_t **dir, options_t *options);
 
 #endif /* !DIRECTORY_H_ */
