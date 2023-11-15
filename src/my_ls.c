@@ -27,7 +27,7 @@ int main(int ac, char **av)
     files_list = get_files_list(files_path);
     if (files_list == NULL)
         return 84;
-    basic_display(files_list, options);
+    sort_before_display(files_list, options);
     free_files_list(files_list);
     free(files_path);
     free(options);

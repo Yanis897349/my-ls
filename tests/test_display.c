@@ -28,7 +28,7 @@ Test(display, basic_display, .init = redirect_all_std)
     file_t **files_list = get_files_list(files_path);
     options_t *options = create_options(ac, av);
 
-    basic_display(files_list, options);
+    sort_before_display(files_list, options);
     cr_assert_stdout_eq_str("AFile  bFile  file  test1  test2\n");
     free(options);
     free_files_list(files_list);
@@ -43,7 +43,7 @@ Test(display, hidden_files, .init = redirect_all_std)
     file_t **files_list = get_files_list(files_path);
     options_t *options = create_options(ac, av);
 
-    basic_display(files_list, options);
+    sort_before_display(files_list, options);
     cr_assert_stdout_eq_str(".  ..  AFile  bFile  file  .hidden  test1  test2\n");
     free(options);
     free_files_list(files_list);
