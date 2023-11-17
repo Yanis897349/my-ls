@@ -21,9 +21,9 @@ static void print_permissions(file_t *file)
 {
     my_putstr((file->stat->st_mode & S_IRUSR) ? "r" : "-");
     my_putstr((file->stat->st_mode & S_IWUSR) ? "w" : "-");
-    if (file->stat->st_mode & S_IXUSR)
+    if (file->stat->st_mode & S_ISVTX)
         my_putstr("x");
-    else if (file->stat->st_mode & S_ISVTX)
+    else if (file->stat->st_mode & S_IXUSR)
         my_putstr("s");
     else
         my_putstr("-");
