@@ -12,9 +12,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void handle_symbolic(file_t *file, char filetype)
+void handle_symbolic(file_t *file, char filetype, int is_in_directory)
 {
-    char *filename = extract_name_from_path(file->path);
+    char *filename = (is_in_directory == 1) ?
+        extract_name_from_path(file->path) : file->path;
     char *buffer = NULL;
     int size = 0;
 
