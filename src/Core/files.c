@@ -18,13 +18,29 @@
 #include "directory.h"
 #include "errno.h"
 
+static int check_permissions(struct stat *file_stat, char *filepath)
+{
+    DIR *directory = NULL;
+
+    if (S_ISDIR(file_stat->st_mode)) {
+        directory = opendir(filepath);
+        if (directory == NULL)
+            return -1;
+        closedir(directory);
+    }
+    return 1;
+}
+
 static int get_valid_files_count(char **files_path)
 {
     struct stat file_stat;
     int valid_files_count = 0;
+    int stat_return = 0;
 
     for (int i = 0; files_path[i] != NULL; i++) {
-        if (lstat(files_path[i], &file_stat) != -1) {
+        stat_return = lstat(files_path[i], &file_stat);
+        if (check_permissions(&file_stat, files_path[i]) != -1
+            && stat_return != -1) {
             valid_files_count++;
         } else {
             print_invalid_file(files_path[i]);
