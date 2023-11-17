@@ -5,6 +5,7 @@
 ** Long listing format
 */
 
+#include "Core/directory.h"
 #include "Core/files.h"
 #include "Core/options.h"
 #include "Helpers/path.h"
