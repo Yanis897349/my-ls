@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <pwd.h>
 #include <grp.h>
+#include <sys/sysmacros.h>
 
 static void print_permissions(file_t *file)
 {
@@ -35,8 +36,11 @@ static void print_permissions(file_t *file)
     my_putstr((file->stat->st_mode & S_IXOTH) ? "x " : "- ");
 }
 
-static void print_time(char **time_array)
+static void print_time(file_t *file)
 {
+    char *str = ctime(&file->stat->st_mtime);
+    char **time_array = my_str_to_word_array(str);
+
     my_putchar(' ');
     my_putstr(time_array[1]);
     my_putchar(' ');
@@ -46,12 +50,20 @@ static void print_time(char **time_array)
     my_putchar(':');
     my_putstr(time_array[4]);
     my_putchar(' ');
+    for (int i = 0; time_array[i] != NULL; i++)
+        free(time_array[i]);
+    free(time_array);
+}
+
+static void print_char_device(file_t *file)
+{
+    my_put_nbr(major(file->stat->st_rdev));
+    my_putstr(", ");
+    my_put_nbr(minor(file->stat->st_rdev));
 }
 
 static void print_long_file(file_t *file, int is_in_directory)
 {
-    char *str = ctime(&file->stat->st_mtime);
-    char **time_arr = my_str_to_word_array(str);
     char filetype = get_filetype(file);
 
     my_putchar(get_filetype(file));
@@ -62,12 +74,12 @@ static void print_long_file(file_t *file, int is_in_directory)
     my_putchar(' ');
     my_putstr(getgrgid(file->stat->st_gid)->gr_name);
     my_putchar(' ');
-    my_put_nbr(file->stat->st_size);
-    print_time(time_arr);
+    if (filetype == 'c' || filetype == 'b')
+        print_char_device(file);
+    else
+        my_put_nbr(file->stat->st_size);
+    print_time(file);
     handle_symbolic(file, filetype, is_in_directory);
-    for (int i = 0; time_arr[i] != NULL; i++)
-        free(time_arr[i]);
-    free(time_arr);
 }
 
 static void print_long_directory(file_t *file)

@@ -5,6 +5,7 @@
 ** Manage files for my ls
 */
 
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdlib.h>
@@ -63,6 +64,14 @@ char get_filetype(file_t *file)
         return 'd';
     if (S_ISLNK(file->stat->st_mode))
         return 'l';
+    if (S_ISCHR(file->stat->st_mode))
+        return 'c';
+    if (S_ISBLK(file->stat->st_mode))
+        return 'b';
+    if (S_ISFIFO(file->stat->st_mode))
+        return 'p';
+    if (S_ISSOCK(file->stat->st_mode))
+        return 's';
     return '-';
 }
 
