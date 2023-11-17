@@ -15,6 +15,7 @@
 #include "Display/display_error.h"
 #include "files.h"
 #include "directory.h"
+#include "errno.h"
 
 static int get_valid_files_count(char **files_path)
 {
@@ -26,6 +27,7 @@ static int get_valid_files_count(char **files_path)
             valid_files_count++;
         } else {
             print_invalid_file(files_path[i]);
+            return -1;
         }
     }
     return valid_files_count;
@@ -68,8 +70,11 @@ file_t **get_files_list(char **files_path, options_t *options)
 {
     int files_count = get_valid_files_count(files_path);
     int files_index = 0;
-    file_t **files_list = malloc(sizeof(file_t *) * (files_count + 1));
+    file_t **files_list = NULL;
 
+    if (files_count == -1)
+        return NULL;
+    files_list = malloc(sizeof(file_t *) * (files_count + 1));
     if (files_list == NULL)
         return NULL;
     my_memset(files_list, 0, sizeof(file_t *) * (files_count + 1));

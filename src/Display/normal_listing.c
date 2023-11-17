@@ -12,9 +12,10 @@
 #include "include/my_io.h"
 #include <unistd.h>
 
-static void print_normal_file(file_t *file)
+static void print_normal_file(file_t *file, int is_in_directory)
 {
-    char *filename = extract_name_from_path(file->path);
+    char *filename = (is_in_directory == 1) ?
+        extract_name_from_path(file->path) : file->path;
 
     my_putstr(filename);
 }
@@ -24,7 +25,7 @@ static void print_normal_directory(file_t *file)
     my_putstr(file->path);
     my_putstr(":\n");
     for (int i = 0; file->content[i] != NULL; i++) {
-        print_normal_file(file->content[i]);
+        print_normal_file(file->content[i], 1);
         write(1, "  ", 2);
     }
 }
@@ -39,7 +40,7 @@ static int handle_normal_listing_special(file_t **files_list,
     if (files_list[0]->is_directory && files_list[1] == NULL) {
         is_special = 1;
         for (int i = 0; files_list[0]->content[i] != NULL; i++) {
-            print_normal_file(files_list[0]->content[i]);
+            print_normal_file(files_list[0]->content[i], 1);
             write(1, "  ", 2);
         }
     }
@@ -53,7 +54,7 @@ void normal_listing_file(file_t **files_list, int *have_directory)
             (*have_directory) = 1;
             continue;
         }
-        print_normal_file(files_list[i]);
+        print_normal_file(files_list[i], 0);
         write(1, "  ", 2);
     }
 }
