@@ -18,4 +18,4 @@ make all
 ```
 
 ## Result 
-![image](https://github.com/Yanis897349/my-ls/assets/146654215/af975b51-795b-41cd-be6c-dc44e8774cdc)
+![image](https://i.imgur.com/nZPQK4j.png)
