@@ -22,18 +22,16 @@ static void print_permissions(file_t *file)
 {
     my_putstr((file->stat->st_mode & S_IRUSR) ? "r" : "-");
     my_putstr((file->stat->st_mode & S_IWUSR) ? "w" : "-");
-    if (file->stat->st_mode & S_IXUSR)
-        my_putstr("x");
-    else if (file->stat->st_mode & S_ISVTX)
-        my_putstr("s");
-    else
-        my_putstr("-");
+    my_putstr((file->stat->st_mode & S_IXUSR) ? "x" : "-");
     my_putstr((file->stat->st_mode & S_IRGRP) ? "r" : "-");
     my_putstr((file->stat->st_mode & S_IWGRP) ? "w" : "-");
     my_putstr((file->stat->st_mode & S_IXGRP) ? "x" : "-");
     my_putstr((file->stat->st_mode & S_IROTH) ? "r" : "-");
     my_putstr((file->stat->st_mode & S_IWOTH) ? "w" : "-");
-    my_putstr((file->stat->st_mode & S_IXOTH) ? "x " : "- ");
+    if (file->stat->st_mode & S_ISVTX)
+        my_putstr((file->stat->st_mode & S_IXOTH) ? "t " : "T ");
+    else
+        my_putstr((file->stat->st_mode & S_IXOTH) ? "x " : "- ");
 }
 
 static void print_time(file_t *file)
