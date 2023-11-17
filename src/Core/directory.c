@@ -17,11 +17,13 @@
 #include <errno.h>
 #include <string.h>
 
-static int is_directory_empty(char *dir_name, file_t **dir)
+int is_directory_empty(char *dir_name, file_t **dir)
 {
     (*dir)->is_directory = 1;
-    if (my_strcmp(dir_name, ".") == 0 || my_strcmp(dir_name, "..") == 0)
+    if (my_strcmp(dir_name, ".") == 0 || my_strcmp(dir_name, "..") == 0) {
+        (*dir)->is_directory = 0;
         return 0;
+    }
     return 1;
 }
 
