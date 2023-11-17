@@ -32,7 +32,7 @@ static void print_permissions(file_t *file)
     my_putstr((file->stat->st_mode & S_IXGRP) ? "x" : "-");
     my_putstr((file->stat->st_mode & S_IROTH) ? "r" : "-");
     my_putstr((file->stat->st_mode & S_IWOTH) ? "w" : "-");
-    my_putstr((file->stat->st_mode & S_IXOTH) ? "x " : "- ");
+    my_putstr((file->stat->st_mode & S_IXOTH) ? "x. " : "-. ");
 }
 
 static void print_time(char **time_array)
