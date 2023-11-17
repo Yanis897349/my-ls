@@ -9,4 +9,4 @@
 
 #include "Core/files.h"
 
-void handle_symbolic(file_t *file, char filetype);
+void handle_symbolic(file_t *file, char filetype, int is_in_directory);
