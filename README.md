@@ -19,3 +19,6 @@ make all
 
 ## Result 
 ![image](https://i.imgur.com/nZPQK4j.png)
+
+## 🚀 Bonus
+- Default alphabetical sorting if no sorting options are used (-t, -r)
